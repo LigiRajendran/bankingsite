@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>applicationform</title>
+</head>
+<body>
+<div id="container_1">
+
+  <h1 id="title">
+  Application Form
+</h1><!--title-->
+
+</div><!---container_1--->
+<div id="container_2">
+
+  <form action="application" method="post">
+      {% csrf_token %}
+    <label id="name-label">Name</label>
+      <input type="text" id="name" name="name" class="form" placeholder="Insert your name"><br><!--name---><br>
+    <label id="email-label">Email</label>
+      <input type="email" id="email" name="email" class="form"  placeholder="Insert your email"><br><!---email--><br>
+    <label id="dob-label">Date of Birth</label>
+      <input type="date" id="dob" name="dob" class="form" placeholder="dob" ><br><!---number--><br>
+      <label id="number-label">Phone Number</label><br>
+      <input type="text" id="phn" name="phn" class="form" placeholder="Insert your phone" ><br><!---number--><br>
+    <label id="gender">Gender</label>
+    <label>
+      <input type="radio" name="gender" value="Male">Male
+    </label>
+    <label>
+      <input type="radio" name="gender" value="Female">Female
+    </label><br> <br>
+    <label id="account">Account</label>
+    <select id="dropdown" name="account" >
+      <option disabled selected value>
+        Select
+      </option>
+      <option value="current">
+        Current
+      </option>
+      <option value="savings">
+        Savings
+      </option>
+      <option value="salary">
+        Salary
+      </option>
+    </select><!--dropdown---><br> <br>
+
+    <label>Address</label>
+      <input type="text" name="address"><br><!---comment--><br>
+
+    <select name="state" id="stateSel" size="1">
+        <option value="" selected="selected">Select state</option>
+    </select>
+    <br>
+    <br>
+
+    <select name="district" id="countySel" size="1">
+        <option value="" selected="selected">Select District</option>
+    </select>
+    <br>
+    <br>
+<select name="branch" id="citySel" size="1">
+        <option value="" selected="selected">Select Branch</option>
+    </select>
+    <p>Materials provide</p>
+    <label>
+      <input type="checkbox" name="materials" value="db">Debit Card
+    </label>
+    <label>
+      <input type="checkbox" name="materials" value="cc">Credit Card
+    </label>
+    <label>
+      <input type="checkbox" name="materials" value="cb">Cheque book
+    </label><br><br>
+<input type="submit">
+
+
+<!--    <div>-->
+<!--        <button class="button login__submit">-->
+
+<!--                 <a href="application" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Submit</a>-->
+
+<!--					</button>-->
+
+<!--        <button class="button login__submit">-->
+
+<!--                 <a href="logout" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Logout</a>-->
+
+<!--					</button></div>-->
+
+  </form><!---survey-form--->
+</div><!--container_2--->
+
+</form>
+{% if messages %}
+  {% for message in messages %}
+
+      <strong>{{message}}&nbsp;&nbsp;&nbsp;<a href="/ ">Home</a></strong>
+
+ {% endfor %}
+{% endif %}
+<script>
+
+
+
+var stateObject = {
+    "Kerala": {
+        "Palakkad": ["Alathur", "Pudussery", "Ottapalam"],
+        "Thiruvanathapuram": ["Nedumangadu", "Chirayinkeezhu", "Kattakada", "Varkala"],
+         "Kozhikode": ["Koduvally", "Thamarassery ", "Karassery"],
+         "Kottayam": ["Meenachil", "Vaikom", "Kanjirappally"],
+        "Ernakulam": ["Aluva", "Muvattupuzha", "Kochi", "Kothamangalam"]
+    }
+}
+window.onload = function () {
+    var stateSel = document.getElementById("stateSel"),
+        countySel = document.getElementById("countySel"),
+        citySel = document.getElementById("citySel");
+    for (var state in stateObject) {
+        stateSel.options[stateSel.options.length] = new Option(state, state);
+    }
+    stateSel.onchange = function () {
+        countySel.length = 1; // remove all options bar first
+        citySel.length = 1; // remove all options bar first
+        if (this.selectedIndex < 1) return; // done
+        for (var county in stateObject[this.value]) {
+            countySel.options[countySel.options.length] = new Option(county, county);
+        }
+    }
+    stateSel.onchange(); // reset in case page is reloaded
+    countySel.onchange = function () {
+        citySel.length = 1; // remove all options bar first
+        if (this.selectedIndex < 1) return; // done
+        var cities = stateObject[stateSel.value][this.value];
+        for (var i = 0; i < cities.length; i++) {
+            citySel.options[citySel.options.length] = new Option(cities[i], cities[i]);
+        }
+    }
+}
+
+
+</script>
+<style>
+  body {
+	background: linear-gradient(90deg, #C7C5F4, #776BCC);
+}
+div{
+  margin: 2em 5em 3em 5em;
+
+  padding: 2em 6em 2em 6em;
+  background: rgb(2,0,36);
+background: linear-gradient(117deg, rgba(2,0,36,1) 0%, rgba(125,129,150,0.9757503221014968) 96%, rgba(222,199,45,1) 98%, rgba(222,199,45,1) 98%, rgba(142,49,242,0.5859143339953169) 98%);
+  color: #ffff;
+  font-family: cursive;
+  border-radius: 1.25rem;
+}
+#container_1{
+  text-align:center;
+}
+#container_2{
+ display: block;
+
+
+}
+.form{
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+#submit{
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: rgb(2,0,36);
+  color: inherit;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+textarea{
+  width: 100%;
+}
+
+
+</style>
+
+</body>
+</html>
